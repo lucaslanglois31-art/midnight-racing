@@ -8,10 +8,6 @@
 
     <style>
 
-        /* ==============================
-           CONFIGURATION
-        ============================== */
-
         * {
             margin: 0;
             padding: 0;
@@ -29,10 +25,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        /* ==============================
-           EFFET DE FOND
-        ============================== */
 
         body::before {
             content: "";
@@ -83,8 +75,6 @@
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.45);
         }
 
-        /* LOGO */
-
         .logo {
             font-size: 21px;
             font-weight: 900;
@@ -98,8 +88,6 @@
         .logo .white {
             color: #ffffff;
         }
-
-        /* MENU */
 
         nav {
             display: flex;
@@ -275,7 +263,7 @@
         }
 
         /* ==============================
-           LIGNES DE SÉPARATION
+           SEPARATEUR
         ============================== */
 
         .separator {
@@ -404,10 +392,10 @@
         }
 
         /* ==============================
-           STATISTIQUES
+           JEUX
         ============================== */
 
-        .stats {
+        .games {
             display: grid;
 
             grid-template-columns:
@@ -416,38 +404,111 @@
             gap: 20px;
         }
 
-        .stat {
-            background: #111512;
+        .game {
+            background:
+                linear-gradient(
+                    145deg,
+                    #121613,
+                    #0d100e
+                );
 
-            border: 1px solid #283129;
+            border: 1px solid #252d27;
 
             padding: 35px;
 
-            text-align: center;
+            position: relative;
 
             transition: 0.25s;
         }
 
-        .stat:hover {
-            border-color: #718c4d;
+        .game::before {
+            content: "";
 
-            transform: translateY(-5px);
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 55px;
+            height: 2px;
+
+            background: #8baa5c;
         }
 
-        .stat .big {
+        .game:hover {
+            transform: translateY(-6px);
+
+            border-color: #52683b;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .game-icon {
             font-size: 42px;
 
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .stat h3 {
-            color: #a4c873;
+        .game h3 {
+            font-size: 23px;
 
-            font-size: 14px;
+            margin-bottom: 12px;
+        }
 
-            letter-spacing: 2px;
+        .game p {
+            color: #899189;
+
+            line-height: 1.7;
+        }
+
+        .game .type {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding: 6px 10px;
+
+            border: 1px solid #3c4b32;
+
+            color: #9fc866;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
 
             text-transform: uppercase;
+        }
+
+        /* ==============================
+           DISCORD
+        ============================== */
+
+        .discord-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #171a2d,
+                    #10121d
+                );
+
+            border: 1px solid #343a68;
+
+            padding: 45px;
+
+            text-align: center;
+        }
+
+        .discord-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .discord-box p {
+            color: #9da2b8;
+
+            margin-bottom: 25px;
         }
 
         /* ==============================
@@ -485,35 +546,6 @@
             line-height: 1.75;
 
             font-size: 15px;
-        }
-
-        /* ==============================
-           BLOC DISCORD
-        ============================== */
-
-        .discord-box {
-            background:
-                linear-gradient(
-                    135deg,
-                    #171a2d,
-                    #10121d
-                );
-
-            border: 1px solid #343a68;
-
-            padding: 45px;
-
-            text-align: center;
-        }
-
-        .discord-box h2 {
-            margin-bottom: 12px;
-        }
-
-        .discord-box p {
-            color: #9da2b8;
-
-            margin-bottom: 25px;
         }
 
         /* ==============================
@@ -563,7 +595,7 @@
             }
 
             .cards,
-            .stats {
+            .games {
                 grid-template-columns: 1fr;
             }
 
@@ -604,7 +636,7 @@
         <nav>
             <a href="#accueil">ACCUEIL</a>
             <a href="#serveur">SERVEUR</a>
-            <a href="#racing">RACING</a>
+            <a href="#jeux">JEUX</a>
             <a href="#reglement">RÈGLEMENT</a>
         </nav>
 
@@ -628,10 +660,10 @@
             </h1>
 
             <p>
-                Une communauté dédiée aux voitures,
-                aux courses et à la compétition.
+                Une communauté où tu peux discuter,
+                jouer et partager tes passions.
                 <br>
-                Rejoins-nous et prends le départ.
+                Rejoins-nous et viens t'amuser.
             </p>
 
             <div class="buttons">
@@ -646,9 +678,9 @@
 
                 <a
                     class="button secondary"
-                    href="#serveur"
+                    href="#jeux"
                 >
-                    DÉCOUVRIR LE SERVEUR
+                    DÉCOUVRIR NOS JEUX
                 </a>
 
             </div>
@@ -676,7 +708,8 @@
             <h2>Notre serveur</h2>
 
             <p>
-                Une communauté construite autour de la passion automobile.
+                Une communauté où plusieurs jeux
+                et activités sont réunis au même endroit.
             </p>
 
         </div>
@@ -686,13 +719,13 @@
 
             <div class="card">
 
-                <div class="icon">🏎️</div>
+                <div class="icon">🎮</div>
 
-                <h3>Courses</h3>
+                <h3>Plusieurs jeux</h3>
 
                 <p>
-                    Participe aux courses et défie
-                    les autres membres de Midnight Racing.
+                    Retrouve différents jeux et activités
+                    directement sur notre serveur Discord.
                 </p>
 
             </div>
@@ -700,13 +733,13 @@
 
             <div class="card">
 
-                <div class="icon">🏆</div>
+                <div class="icon">🤖</div>
 
-                <h3>Compétition</h3>
+                <h3>Bots & jeux</h3>
 
                 <p>
-                    Affronte les autres pilotes,
-                    progresse et vise le sommet.
+                    Profite de plusieurs bots permettant
+                    de jouer directement dans Discord.
                 </p>
 
             </div>
@@ -714,13 +747,13 @@
 
             <div class="card">
 
-                <div class="icon">🎖️</div>
+                <div class="icon">🌙</div>
 
                 <h3>Communauté</h3>
 
                 <p>
-                    Rejoins une communauté de passionnés
-                    et participe à la vie du serveur.
+                    Discute avec les membres, participe
+                    aux activités et profite du serveur.
                 </p>
 
             </div>
@@ -734,53 +767,129 @@
 
 
     <!-- ==============================
-         RACING
+         JEUX
     ============================== -->
 
-    <section id="racing">
+    <section id="jeux">
 
         <div class="section-title">
 
             <div class="number">
-                02 / RACING
+                02 / GAMES
             </div>
 
-            <h2>Midnight Racing</h2>
+            <h2>Nos jeux</h2>
 
             <p>
-                Prépare ta voiture. La course commence maintenant.
+                Découvre les jeux et activités disponibles
+                sur Midnight Racing.
             </p>
 
         </div>
 
 
-        <div class="stats">
+        <div class="games">
 
-            <div class="stat">
 
-                <div class="big">🏁</div>
+            <!-- WARZONE -->
 
-                <h3>Courses</h3>
+            <div class="game">
+
+                <div class="game-icon">🔫</div>
+
+                <h3>Warzone</h3>
+
+                <p>
+                    Rejoins les autres membres pour jouer
+                    à Warzone et passer un bon moment ensemble.
+                </p>
+
+                <span class="type">
+                    Jeu vidéo
+                </span>
+
+            </div>
+
+
+            <!-- AKINATOR -->
+
+            <div class="game">
+
+                <div class="game-icon">🔮</div>
+
+                <h3>Akinator</h3>
+
+                <p>
+                    Pense à un personnage et laisse Akinator
+                    essayer de deviner à qui tu penses.
+                </p>
+
+                <span class="type">
+                    Bot Discord
+                </span>
 
             </div>
 
 
-            <div class="stat">
+            <!-- MUDAE -->
 
-                <div class="big">🏆</div>
+            <div class="game">
 
-                <h3>Classements</h3>
+                <div class="game-icon">🎴</div>
+
+                <h3>Mudae</h3>
+
+                <p>
+                    Collectionne des personnages, utilise
+                    les commandes et participe aux activités.
+                </p>
+
+                <span class="type">
+                    Bot Discord
+                </span>
 
             </div>
 
 
-            <div class="stat">
+            <!-- FUUKA -->
 
-                <div class="big">🚗</div>
+            <div class="game">
 
-                <h3>Véhicules</h3>
+                <div class="game-icon">📚</div>
+
+                <h3>Fuuka</h3>
+
+                <p>
+                    Profite des différentes commandes et
+                    activités proposées par le bot Fuuka.
+                </p>
+
+                <span class="type">
+                    Bot Discord
+                </span>
 
             </div>
+
+
+            <!-- INITIAL D -->
+
+            <div class="game">
+
+                <div class="game-icon">🏎️</div>
+
+                <h3>Initial D Street Racing</h3>
+
+                <p>
+                    Fais des courses, améliore tes véhicules
+                    et affronte les autres joueurs.
+                </p>
+
+                <span class="type">
+                    Bot Discord
+                </span>
+
+            </div>
+
 
         </div>
 
@@ -801,8 +910,8 @@
             <h2>☾ Rejoins Midnight Racing</h2>
 
             <p>
-                Toutes les courses, annonces et discussions
-                se passent sur notre serveur Discord.
+                Toutes les discussions, activités et jeux
+                sont disponibles sur notre serveur Discord.
             </p>
 
             <a
@@ -894,7 +1003,7 @@
 • 👢 Expulsion
 • 🔨 Bannissement temporaire ou définitif»
 
-🏎️ 08・MIDNIGHT RACING
+🎮 08・MIDNIGHT RACING
 
 «• Amusez-vous, faites des rencontres et profitez du serveur !
 • Gardez une bonne ambiance et respectez les autres membres.
