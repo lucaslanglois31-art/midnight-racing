@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Midnight Racing</title>
+
+    <style>
+
+        /* ==============================
+           CONFIGURATION
+        ============================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #080a09;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ==============================
+           EFFET DE FOND
+        ============================== */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    rgba(8, 10, 9, 0.94),
+                    rgba(8, 10, 9, 0.97)
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(130, 160, 100, 0.025) 3px,
+                    rgba(130, 160, 100, 0.025) 4px
+                );
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ==============================
+           BARRE DU HAUT
+        ============================== */
+
+        header {
+            height: 65px;
+
+            background: rgba(13, 16, 14, 0.97);
+
+            border-bottom: 1px solid #283029;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+
+            z-index: 1000;
+
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.45);
+        }
+
+        /* LOGO */
+
+        .logo {
+            font-size: 21px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo .green {
+            color: #8fb35b;
+        }
+
+        .logo .white {
+            color: #ffffff;
+        }
+
+        /* MENU */
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #9ba39b;
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #a8d46f;
+        }
+
+        /* ==============================
+           HERO
+        ============================== */
+
+        .hero {
+            min-height: 720px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 120px 20px 70px;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(104, 135, 57, 0.18),
+                    transparent 45%
+                );
+        }
+
+        .hero::after {
+            content: "MIDNIGHT RACING";
+
+            position: absolute;
+
+            font-size: 13vw;
+            font-weight: 900;
+
+            color: rgba(255, 255, 255, 0.015);
+
+            white-space: nowrap;
+
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .status {
+            display: inline-block;
+
+            border: 1px solid #46583a;
+            background: rgba(100, 130, 60, 0.08);
+
+            padding: 8px 16px;
+
+            margin-bottom: 25px;
+
+            color: #a8d46f;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 90px);
+
+            font-weight: 900;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 15px;
+
+            text-shadow:
+                0 0 30px rgba(130, 170, 70, 0.12);
+        }
+
+        .hero h1 span {
+            color: #9fc866;
+        }
+
+        .hero p {
+            color: #929a92;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+        }
+
+        /* ==============================
+           BOUTONS
+        ============================== */
+
+        .buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 15px 27px;
+
+            border-radius: 4px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+
+            border: 1px solid transparent;
+        }
+
+        .discord {
+            background: #5865f2;
+            color: white;
+
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.15);
+        }
+
+        .discord:hover {
+            background: #4752c4;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 25px rgba(88, 101, 242, 0.25);
+        }
+
+        .secondary {
+            background: #151a16;
+
+            color: #c5ccc4;
+
+            border-color: #303a31;
+        }
+
+        .secondary:hover {
+            background: #202820;
+
+            color: #ffffff;
+
+            border-color: #6d8c4a;
+
+            transform: translateY(-3px);
+        }
+
+        /* ==============================
+           LIGNES DE SÉPARATION
+        ============================== */
+
+        .separator {
+            width: 100%;
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #3e5034,
+                    transparent
+                );
+        }
+
+        /* ==============================
+           SECTIONS
+        ============================== */
+
+        section {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 90px 30px;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .section-title .number {
+            color: #76994b;
+
+            font-size: 12px;
+
+            letter-spacing: 3px;
+
+            font-weight: bold;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+
+            margin-top: 10px;
+            margin-bottom: 12px;
+
+            text-transform: uppercase;
+        }
+
+        .section-title p {
+            color: #858d86;
+        }
+
+        /* ==============================
+           CARTES
+        ============================== */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    #121613,
+                    #0d100e
+                );
+
+            border: 1px solid #252d27;
+
+            padding: 32px;
+
+            position: relative;
+
+            transition: 0.25s;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 40px;
+            height: 2px;
+
+            background: #8baa5c;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+
+            border-color: #52683b;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .icon {
+            font-size: 35px;
+
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 21px;
+
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #899189;
+
+            line-height: 1.7;
+        }
+
+        /* ==============================
+           STATISTIQUES
+        ============================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .stat {
+            background: #111512;
+
+            border: 1px solid #283129;
+
+            padding: 35px;
+
+            text-align: center;
+
+            transition: 0.25s;
+        }
+
+        .stat:hover {
+            border-color: #718c4d;
+
+            transform: translateY(-5px);
+        }
+
+        .stat .big {
+            font-size: 42px;
+
+            margin-bottom: 10px;
+        }
+
+        .stat h3 {
+            color: #a4c873;
+
+            font-size: 14px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        /* ==============================
+           REGLEMENT
+        ============================== */
+
+        .rules {
+            background:
+                linear-gradient(
+                    145deg,
+                    #111512,
+                    #0b0e0c
+                );
+
+            border: 1px solid #2b342d;
+
+            padding: 35px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .rules pre {
+            white-space: pre-wrap;
+
+            word-wrap: break-word;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: #b7beb7;
+
+            line-height: 1.75;
+
+            font-size: 15px;
+        }
+
+        /* ==============================
+           BLOC DISCORD
+        ============================== */
+
+        .discord-box {
+            background:
+                linear-gradient(
+                    135deg,
+                    #171a2d,
+                    #10121d
+                );
+
+            border: 1px solid #343a68;
+
+            padding: 45px;
+
+            text-align: center;
+        }
+
+        .discord-box h2 {
+            margin-bottom: 12px;
+        }
+
+        .discord-box p {
+            color: #9da2b8;
+
+            margin-bottom: 25px;
+        }
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        footer {
+            background: #060806;
+
+            border-top: 1px solid #252c26;
+
+            text-align: center;
+
+            padding: 35px 20px;
+
+            color: #656d65;
+        }
+
+        footer strong {
+            color: #91b461;
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            header {
+                padding: 0 18px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                min-height: 650px;
+            }
+
+            .hero h1 {
+                letter-spacing: 2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .cards,
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 65px 20px;
+            }
+
+            .rules {
+                padding: 22px;
+            }
+
+            .rules pre {
+                font-size: 13px;
+            }
+
+            .discord-box {
+                padding: 30px 20px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==============================
+         MENU
+    ============================== -->
+
+    <header>
+
+        <div class="logo">
+            ☾ <span class="white">MIDNIGHT</span>
+            <span class="green">RACING</span>
+        </div>
+
+        <nav>
+            <a href="#accueil">ACCUEIL</a>
+            <a href="#serveur">SERVEUR</a>
+            <a href="#racing">RACING</a>
+            <a href="#reglement">RÈGLEMENT</a>
+        </nav>
+
+    </header>
+
+
+    <!-- ==============================
+         ACCUEIL
+    ============================== -->
+
+    <div class="hero" id="accueil">
+
+        <div class="hero-content">
+
+            <div class="status">
+                ● COMMUNAUTÉ ACTIVE
+            </div>
+
+            <h1>
+                MIDNIGHT <span>RACING</span>
+            </h1>
+
+            <p>
+                Une communauté dédiée aux voitures,
+                aux courses et à la compétition.
+                <br>
+                Rejoins-nous et prends le départ.
+            </p>
+
+            <div class="buttons">
+
+                <a
+                    class="button discord"
+                    href="https://discord.gg/CrgQcJxwjd"
+                    target="_blank"
+                >
+                    💬 REJOINDRE DISCORD
+                </a>
+
+                <a
+                    class="button secondary"
+                    href="#serveur"
+                >
+                    DÉCOUVRIR LE SERVEUR
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="separator"></div>
+
+
+    <!-- ==============================
+         SERVEUR
+    ============================== -->
+
+    <section id="serveur">
+
+        <div class="section-title">
+
+            <div class="number">
+                01 / COMMUNITY
+            </div>
+
+            <h2>Notre serveur</h2>
+
+            <p>
+                Une communauté construite autour de la passion automobile.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">🏎️</div>
+
+                <h3>Courses</h3>
+
+                <p>
+                    Participe aux courses et défie
+                    les autres membres de Midnight Racing.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">🏆</div>
+
+                <h3>Compétition</h3>
+
+                <p>
+                    Affronte les autres pilotes,
+                    progresse et vise le sommet.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">🎖️</div>
+
+                <h3>Communauté</h3>
+
+                <p>
+                    Rejoins une communauté de passionnés
+                    et participe à la vie du serveur.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="separator"></div>
+
+
+    <!-- ==============================
+         RACING
+    ============================== -->
+
+    <section id="racing">
+
+        <div class="section-title">
+
+            <div class="number">
+                02 / RACING
+            </div>
+
+            <h2>Midnight Racing</h2>
+
+            <p>
+                Prépare ta voiture. La course commence maintenant.
+            </p>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="big">🏁</div>
+
+                <h3>Courses</h3>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="big">🏆</div>
+
+                <h3>Classements</h3>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="big">🚗</div>
+
+                <h3>Véhicules</h3>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="separator"></div>
+
+
+    <!-- ==============================
+         DISCORD
+    ============================== -->
+
+    <section>
+
+        <div class="discord-box">
+
+            <h2>☾ Rejoins Midnight Racing</h2>
+
+            <p>
+                Toutes les courses, annonces et discussions
+                se passent sur notre serveur Discord.
+            </p>
+
+            <a
+                class="button discord"
+                href="https://discord.gg/CrgQcJxwjd"
+                target="_blank"
+            >
+                💬 REJOINDRE LE SERVEUR
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         REGLEMENT
+    ============================== -->
+
+    <section id="reglement">
+
+        <div class="section-title">
+
+            <div class="number">
+                03 / RULES
+            </div>
+
+            <h2>Règlement</h2>
+
+            <p>
+                À lire avant de participer à la communauté.
+            </p>
+
+        </div>
+
+
+        <div class="rules">
+
+<pre>╭━━━━━━━━━━━━━━━━━━━━╮
+☾ 𝐌𝐈𝐃𝐍𝐈𝐆𝐇𝐓 𝐑𝐀𝐂𝐈𝐍𝐆 ☾
+𝐑È𝐆𝐋𝐄𝐌𝐄𝐍𝐓 𝐃𝐔 𝐒𝐄𝐑𝐕𝐄𝐔𝐑
+╰━━━━━━━━━━━━━━━━━━━━╯
+
+🏁 01・RESPECT
+
+«• Respect obligatoire envers tous les membres.
+• Les insultes, provocations et comportements toxiques sont interdits.
+• Aucun harcèlement, intimidation ou acharnement envers un membre.
+• Les conflits personnels doivent rester en dehors du serveur.»
+
+🌙 02・COMPORTEMENT
+
+«• Aucun contenu NSFW, choquant ou inapproprié.
+• Aucun propos discriminatoire ou haineux.
+• Pas de spam, flood ou mention abusive.
+• Évitez d'envoyer des messages inutiles dans les salons qui ne sont pas prévus pour ça.»
+
+💬 03・SALONS & VOCAL
+
+«• Utilisez chaque salon pour son objectif.
+• Évitez de parler par-dessus les autres en vocal.
+• Pas de soundboard ou de musique à volume abusif.
+• Respectez les membres présents dans les salons vocaux.»
+
+🔗 04・PUBLICITÉ
+
+«• La publicité est interdite sans autorisation du staff.
+• Pas de publicité en MP aux membres du serveur.
+• Aucun lien suspect ou frauduleux.»
+
+🛡️ 05・SÉCURITÉ
+
+«• Ne partagez jamais vos mots de passe ou informations personnelles.
+• Les arnaques et tentatives de vol de comptes sont strictement interdites.
+• Toute activité visant à nuire au serveur ou à ses membres sera sanctionnée.»
+
+👑 06・STAFF
+
+«• Les décisions du staff doivent être respectées.
+• Si vous avez un problème avec une sanction, contactez le staff calmement.
+• L'abus de permissions ou de rôles est interdit.
+• Le staff peut intervenir lorsqu'une situation nuit à l'ambiance du serveur.»
+
+⚠️ 07・SANCTIONS
+
+«Le non-respect du règlement peut entraîner :
+• ⚠️ Avertissement
+• 🔇 Mute
+• 👢 Expulsion
+• 🔨 Bannissement temporaire ou définitif»
+
+🏎️ 08・MIDNIGHT RACING
+
+«• Amusez-vous, faites des rencontres et profitez du serveur !
+• Gardez une bonne ambiance et respectez les autres membres.
+• En cas de problème, contactez un membre du staff.»
+
+╭━━━━━━━━━━━━━━━━━━━━╮
+☾ 𝐁𝐎𝐍𝐍𝐄 𝐂𝐎𝐍𝐃𝐔𝐈𝐓𝐄 𝐄𝐓 𝐁𝐎𝐍 𝐑𝐈𝐃𝐄 ! ☾
+╰━━━━━━━━━━━━━━━━━━━━╯</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==============================
+         FOOTER
+    ============================== -->
+
+    <footer>
+
+        <p>
+            © 2026 <strong>Midnight Racing</strong>
+            — Tous droits réservés.
+        </p>
+
+    </footer>
+
+
+</body>
+</html>
