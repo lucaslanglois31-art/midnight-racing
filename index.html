@@ -1,953 +1,1036 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Midnight Racing</title>
+```
+<title>Midnight Racing</title>
 
-    <!-- Icône affichée à côté du nom du site -->
-    <link rel="icon" type="image/png" href="Screenshot 2026-09-01 141850.png">
+<!-- Icône affichée à côté du nom du site -->
+<link rel="icon" type="image/png" href="Screenshot 2026-09-01 141850.png">
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background: #080a09;
+        color: #ffffff;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* ==============================
+       FOND ANIMÉ
+    ============================== */
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: -50%;
+        width: 200%;
+        height: 200%;
+
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(104, 135, 57, 0.12),
+                transparent 35%
+            ),
+            repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 100px,
+                rgba(143, 179, 91, 0.07) 102px,
+                rgba(143, 179, 91, 0.07) 105px,
+                transparent 108px,
+                transparent 210px
+            ),
+            repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.025) 0px,
+                rgba(255, 255, 255, 0.025) 2px,
+                transparent 2px,
+                transparent 70px
+            );
+
+        pointer-events: none;
+        z-index: -2;
+
+        transform: perspective(600px) rotateX(65deg);
+
+        animation: racingBackground 0.9s linear infinite;
+    }
+
+    @keyframes racingBackground {
+
+        from {
+            transform:
+                perspective(600px)
+                rotateX(65deg)
+                translateY(0);
         }
 
-        html {
-            scroll-behavior: smooth;
+        to {
+            transform:
+                perspective(600px)
+                rotateX(65deg)
+                translateY(140px);
         }
 
-        body {
-            background: #080a09;
-            color: #ffffff;
-            min-height: 100vh;
-            overflow-x: hidden;
+    }
+
+    /* ==============================
+       LIGNES DE VITESSE
+    ============================== */
+
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+
+        background:
+            repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                transparent 150px,
+                rgba(168, 212, 111, 0.045) 152px,
+                rgba(168, 212, 111, 0.045) 155px,
+                transparent 158px,
+                transparent 300px
+            );
+
+        pointer-events: none;
+        z-index: -1;
+
+        animation: speedLines 0.65s linear infinite;
+    }
+
+    @keyframes speedLines {
+
+        from {
+            transform: translateX(0);
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-
-            background:
-                linear-gradient(
-                    rgba(8, 10, 9, 0.94),
-                    rgba(8, 10, 9, 0.97)
-                ),
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 3px,
-                    rgba(130, 160, 100, 0.025) 3px,
-                    rgba(130, 160, 100, 0.025) 4px
-                );
-
-            pointer-events: none;
-            z-index: -1;
+        to {
+            transform: translateX(-300px);
         }
 
-        /* ==============================
-           BARRE DU HAUT
-        ============================== */
+    }
+
+    /* ==============================
+       BARRE DU HAUT
+    ============================== */
+
+    header {
+        height: 65px;
+        background: rgba(13, 16, 14, 0.97);
+        border-bottom: 1px solid #283029;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 30px;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 1000;
+
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.45);
+    }
+
+    .logo {
+        font-size: 21px;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+
+    .logo .green {
+        color: #8fb35b;
+    }
+
+    .logo .white {
+        color: #ffffff;
+    }
+
+    nav {
+        display: flex;
+        gap: 25px;
+    }
+
+    nav a {
+        color: #9ba39b;
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: bold;
+
+        transition: 0.2s;
+    }
+
+    nav a:hover {
+        color: #a8d46f;
+    }
+
+    /* ==============================
+       HERO
+    ============================== */
+
+    .hero {
+        min-height: 720px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 120px 20px 70px;
+
+        position: relative;
+
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(104, 135, 57, 0.18),
+                transparent 45%
+            );
+    }
+
+    /* LOGO EN ARRIÈRE-PLAN CACHÉ COMME À LA BASE */
+
+    .hero::after {
+        content: "MIDNIGHT RACING";
+
+        position: absolute;
+
+        font-size: 13vw;
+        font-weight: 900;
+
+        color: rgba(255, 255, 255, 0.015);
+
+        white-space: nowrap;
+
+        pointer-events: none;
+    }
+
+    .hero-content {
+        max-width: 900px;
+        z-index: 1;
+    }
+
+    .status {
+        display: inline-block;
+
+        border: 1px solid #46583a;
+        background: rgba(100, 130, 60, 0.08);
+
+        padding: 8px 16px;
+
+        margin-bottom: 25px;
+
+        color: #a8d46f;
+
+        font-size: 12px;
+        font-weight: bold;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+    }
+
+    .hero h1 {
+        font-size: clamp(48px, 8vw, 90px);
+
+        font-weight: 900;
+
+        letter-spacing: 4px;
+
+        margin-bottom: 15px;
+
+        text-shadow:
+            0 0 30px rgba(130, 170, 70, 0.12);
+    }
+
+    .hero h1 span {
+        color: #9fc866;
+    }
+
+    .hero p {
+        color: #929a92;
+
+        font-size: 18px;
+
+        line-height: 1.7;
+
+        margin-bottom: 35px;
+    }
+
+    /* ==============================
+       BOUTONS
+    ============================== */
+
+    .buttons {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+    }
+
+    .button {
+        padding: 15px 27px;
+
+        border-radius: 4px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        transition: 0.25s;
+
+        border: 1px solid transparent;
+    }
+
+    .discord {
+        background: #5865f2;
+        color: white;
+
+        box-shadow: 0 0 20px rgba(88, 101, 242, 0.15);
+    }
+
+    .discord:hover {
+        background: #4752c4;
+
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 8px 25px rgba(88, 101, 242, 0.25);
+    }
+
+    .secondary {
+        background: #151a16;
+
+        color: #c5ccc4;
+
+        border-color: #303a31;
+    }
+
+    .secondary:hover {
+        background: #202820;
+
+        color: #ffffff;
+
+        border-color: #6d8c4a;
+
+        transform: translateY(-3px);
+    }
+
+    /* ==============================
+       SEPARATEUR
+    ============================== */
+
+    .separator {
+        width: 100%;
+        height: 1px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                #3e5034,
+                transparent
+            );
+    }
+
+    /* ==============================
+       SECTIONS
+    ============================== */
+
+    section {
+        max-width: 1200px;
+
+        margin: auto;
+
+        padding: 90px 30px;
+    }
+
+    .section-title {
+        text-align: center;
+
+        margin-bottom: 50px;
+    }
+
+    .section-title .number {
+        color: #76994b;
+
+        font-size: 12px;
+
+        letter-spacing: 3px;
+
+        font-weight: bold;
+    }
+
+    .section-title h2 {
+        font-size: 38px;
+
+        margin-top: 10px;
+        margin-bottom: 12px;
+
+        text-transform: uppercase;
+    }
+
+    .section-title p {
+        color: #858d86;
+    }
+
+    /* ==============================
+       CARTES
+    ============================== */
+
+    .cards {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 20px;
+    }
+
+    .card {
+        background:
+            linear-gradient(
+                145deg,
+                #121613,
+                #0d100e
+            );
+
+        border: 1px solid #252d27;
+
+        padding: 32px;
+
+        position: relative;
+
+        transition: 0.25s;
+    }
+
+    .card::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 40px;
+        height: 2px;
+
+        background: #8baa5c;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+
+        border-color: #52683b;
+
+        box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .icon {
+        font-size: 35px;
+
+        margin-bottom: 20px;
+    }
+
+    .card h3 {
+        font-size: 21px;
+
+        margin-bottom: 12px;
+    }
+
+    .card p {
+        color: #899189;
+
+        line-height: 1.7;
+    }
+
+    /* ==============================
+       JEUX
+    ============================== */
+
+    .games {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 20px;
+    }
+
+    .game {
+        background:
+            linear-gradient(
+                145deg,
+                #121613,
+                #0d100e
+            );
+
+        border: 1px solid #252d27;
+
+        padding: 35px;
+
+        position: relative;
+
+        transition: 0.25s;
+    }
+
+    .game::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 55px;
+        height: 2px;
+
+        background: #8baa5c;
+    }
+
+    .game:hover {
+        transform: translateY(-6px);
+
+        border-color: #52683b;
+
+        box-shadow:
+            0 15px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    .game-icon {
+        font-size: 42px;
+
+        margin-bottom: 20px;
+    }
+
+    .game h3 {
+        font-size: 23px;
+
+        margin-bottom: 12px;
+    }
+
+    .game p {
+        color: #899189;
+
+        line-height: 1.7;
+    }
+
+    .game .type {
+        display: inline-block;
+
+        margin-top: 18px;
+
+        padding: 6px 10px;
+
+        border: 1px solid #3c4b32;
+
+        color: #9fc866;
+
+        font-size: 11px;
+
+        font-weight: bold;
+
+        letter-spacing: 1px;
+
+        text-transform: uppercase;
+    }
+
+    /* ==============================
+       DISCORD
+    ============================== */
+
+    .discord-box {
+        background:
+            linear-gradient(
+                135deg,
+                #171a2d,
+                #10121d
+            );
+
+        border: 1px solid #343a68;
+
+        padding: 45px;
+
+        text-align: center;
+    }
+
+    .discord-box h2 {
+        margin-bottom: 12px;
+    }
+
+    .discord-box p {
+        color: #9da2b8;
+
+        margin-bottom: 25px;
+    }
+
+    /* ==============================
+       REGLEMENT
+    ============================== */
+
+    .rules {
+        background:
+            linear-gradient(
+                145deg,
+                #111512,
+                #0b0e0c
+            );
+
+        border: 1px solid #2b342d;
+
+        padding: 35px;
+
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .rules pre {
+        white-space: pre-wrap;
+
+        word-wrap: break-word;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        color: #b7beb7;
+
+        line-height: 1.75;
+
+        font-size: 15px;
+    }
+
+    /* ==============================
+       FOOTER
+    ============================== */
+
+    footer {
+        background: #060806;
+
+        border-top: 1px solid #252c26;
+
+        text-align: center;
+
+        padding: 35px 20px;
+
+        color: #656d65;
+    }
+
+    footer strong {
+        color: #91b461;
+    }
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 800px) {
 
         header {
-            height: 65px;
-            background: rgba(13, 16, 14, 0.97);
-            border-bottom: 1px solid #283029;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 0 30px;
-
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-
-            z-index: 1000;
-
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.45);
-        }
-
-        .logo {
-            font-size: 21px;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
-
-        .logo .green {
-            color: #8fb35b;
-        }
-
-        .logo .white {
-            color: #ffffff;
+            padding: 0 18px;
         }
 
         nav {
-            display: flex;
-            gap: 25px;
+            display: none;
         }
-
-        nav a {
-            color: #9ba39b;
-            text-decoration: none;
-
-            font-size: 14px;
-            font-weight: bold;
-
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #a8d46f;
-        }
-
-        /* ==============================
-           HERO
-        ============================== */
 
         .hero {
-            min-height: 720px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 120px 20px 70px;
-
-            position: relative;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(104, 135, 57, 0.18),
-                    transparent 45%
-                );
-        }
-
-        .hero::after {
-            content: "MIDNIGHT RACING";
-
-            position: absolute;
-
-            font-size: 13vw;
-            font-weight: 900;
-
-            color: rgba(255, 255, 255, 0.015);
-
-            white-space: nowrap;
-
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 1;
-        }
-
-        .status {
-            display: inline-block;
-
-            border: 1px solid #46583a;
-            background: rgba(100, 130, 60, 0.08);
-
-            padding: 8px 16px;
-
-            margin-bottom: 25px;
-
-            color: #a8d46f;
-
-            font-size: 12px;
-            font-weight: bold;
-
-            letter-spacing: 2px;
-
-            text-transform: uppercase;
+            min-height: 650px;
         }
 
         .hero h1 {
-            font-size: clamp(48px, 8vw, 90px);
-
-            font-weight: 900;
-
-            letter-spacing: 4px;
-
-            margin-bottom: 15px;
-
-            text-shadow:
-                0 0 30px rgba(130, 170, 70, 0.12);
-        }
-
-        .hero h1 span {
-            color: #9fc866;
+            letter-spacing: 2px;
         }
 
         .hero p {
-            color: #929a92;
-
-            font-size: 18px;
-
-            line-height: 1.7;
-
-            margin-bottom: 35px;
+            font-size: 16px;
         }
 
-        /* ==============================
-           BOUTONS
-        ============================== */
-
-        .buttons {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 15px;
-
-            flex-wrap: wrap;
+        .cards,
+        .games {
+            grid-template-columns: 1fr;
         }
-
-        .button {
-            padding: 15px 27px;
-
-            border-radius: 4px;
-
-            text-decoration: none;
-
-            font-weight: bold;
-
-            transition: 0.25s;
-
-            border: 1px solid transparent;
-        }
-
-        .discord {
-            background: #5865f2;
-            color: white;
-
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.15);
-        }
-
-        .discord:hover {
-            background: #4752c4;
-
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 8px 25px rgba(88, 101, 242, 0.25);
-        }
-
-        .secondary {
-            background: #151a16;
-
-            color: #c5ccc4;
-
-            border-color: #303a31;
-        }
-
-        .secondary:hover {
-            background: #202820;
-
-            color: #ffffff;
-
-            border-color: #6d8c4a;
-
-            transform: translateY(-3px);
-        }
-
-        /* ==============================
-           SEPARATEUR
-        ============================== */
-
-        .separator {
-            width: 100%;
-            height: 1px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    #3e5034,
-                    transparent
-                );
-        }
-
-        /* ==============================
-           SECTIONS
-        ============================== */
 
         section {
-            max-width: 1200px;
-
-            margin: auto;
-
-            padding: 90px 30px;
+            padding: 65px 20px;
         }
-
-        .section-title {
-            text-align: center;
-
-            margin-bottom: 50px;
-        }
-
-        .section-title .number {
-            color: #76994b;
-
-            font-size: 12px;
-
-            letter-spacing: 3px;
-
-            font-weight: bold;
-        }
-
-        .section-title h2 {
-            font-size: 38px;
-
-            margin-top: 10px;
-            margin-bottom: 12px;
-
-            text-transform: uppercase;
-        }
-
-        .section-title p {
-            color: #858d86;
-        }
-
-        /* ==============================
-           CARTES
-        ============================== */
-
-        .cards {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-        }
-
-        .card {
-            background:
-                linear-gradient(
-                    145deg,
-                    #121613,
-                    #0d100e
-                );
-
-            border: 1px solid #252d27;
-
-            padding: 32px;
-
-            position: relative;
-
-            transition: 0.25s;
-        }
-
-        .card::before {
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 40px;
-            height: 2px;
-
-            background: #8baa5c;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-
-            border-color: #52683b;
-
-            box-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.35);
-        }
-
-        .icon {
-            font-size: 35px;
-
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 21px;
-
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: #899189;
-
-            line-height: 1.7;
-        }
-
-        /* ==============================
-           JEUX
-        ============================== */
-
-        .games {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 20px;
-        }
-
-        .game {
-            background:
-                linear-gradient(
-                    145deg,
-                    #121613,
-                    #0d100e
-                );
-
-            border: 1px solid #252d27;
-
-            padding: 35px;
-
-            position: relative;
-
-            transition: 0.25s;
-        }
-
-        .game::before {
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 55px;
-            height: 2px;
-
-            background: #8baa5c;
-        }
-
-        .game:hover {
-            transform: translateY(-6px);
-
-            border-color: #52683b;
-
-            box-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.35);
-        }
-
-        .game-icon {
-            font-size: 42px;
-
-            margin-bottom: 20px;
-        }
-
-        .game h3 {
-            font-size: 23px;
-
-            margin-bottom: 12px;
-        }
-
-        .game p {
-            color: #899189;
-
-            line-height: 1.7;
-        }
-
-        .game .type {
-            display: inline-block;
-
-            margin-top: 18px;
-
-            padding: 6px 10px;
-
-            border: 1px solid #3c4b32;
-
-            color: #9fc866;
-
-            font-size: 11px;
-
-            font-weight: bold;
-
-            letter-spacing: 1px;
-
-            text-transform: uppercase;
-        }
-
-        /* ==============================
-           DISCORD
-        ============================== */
-
-        .discord-box {
-            background:
-                linear-gradient(
-                    135deg,
-                    #171a2d,
-                    #10121d
-                );
-
-            border: 1px solid #343a68;
-
-            padding: 45px;
-
-            text-align: center;
-        }
-
-        .discord-box h2 {
-            margin-bottom: 12px;
-        }
-
-        .discord-box p {
-            color: #9da2b8;
-
-            margin-bottom: 25px;
-        }
-
-        /* ==============================
-           REGLEMENT
-        ============================== */
 
         .rules {
-            background:
-                linear-gradient(
-                    145deg,
-                    #111512,
-                    #0b0e0c
-                );
-
-            border: 1px solid #2b342d;
-
-            padding: 35px;
-
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, 0.25);
+            padding: 22px;
         }
 
         .rules pre {
-            white-space: pre-wrap;
-
-            word-wrap: break-word;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            color: #b7beb7;
-
-            line-height: 1.75;
-
-            font-size: 15px;
+            font-size: 13px;
         }
 
-        /* ==============================
-           FOOTER
-        ============================== */
-
-        footer {
-            background: #060806;
-
-            border-top: 1px solid #252c26;
-
-            text-align: center;
-
-            padding: 35px 20px;
-
-            color: #656d65;
+        .discord-box {
+            padding: 30px 20px;
         }
+    }
 
-        footer strong {
-            color: #91b461;
-        }
+</style>
+```
 
-        /* ==============================
-           MOBILE
-        ============================== */
-
-        @media (max-width: 800px) {
-
-            header {
-                padding: 0 18px;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .hero {
-                min-height: 650px;
-            }
-
-            .hero h1 {
-                letter-spacing: 2px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .cards,
-            .games {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 65px 20px;
-            }
-
-            .rules {
-                padding: 22px;
-            }
-
-            .rules pre {
-                font-size: 13px;
-            }
-
-            .discord-box {
-                padding: 30px 20px;
-            }
-        }
-
-    </style>
 </head>
-
 
 <body>
 
-    <!-- ==============================
-         MENU
-    ============================== -->
+```
+<!-- ==============================
+     MENU
+============================== -->
 
-    <header>
+<header>
 
-        <div class="logo">
-            ☾ <span class="white">MIDNIGHT</span>
-            <span class="green">RACING</span>
-        </div>
-
-        <nav>
-            <a href="#accueil">ACCUEIL</a>
-            <a href="#serveur">SERVEUR</a>
-            <a href="#jeux">JEUX</a>
-            <a href="#reglement">RÈGLEMENT</a>
-        </nav>
-
-    </header>
-
-
-    <!-- ==============================
-         ACCUEIL
-    ============================== -->
-
-    <div class="hero" id="accueil">
-
-        <div class="hero-content">
-
-            <div class="status">
-                ● COMMUNAUTÉ ACTIVE
-            </div>
-
-            <h1>
-                MIDNIGHT <span>RACING</span>
-            </h1>
-
-            <p>
-                Une communauté où tu peux discuter,
-                jouer et partager tes passions.
-                <br>
-                Rejoins-nous et viens t'amuser.
-            </p>
-
-            <div class="buttons">
-
-                <a
-                    class="button discord"
-                    href="https://discord.gg/CrgQcJxwjd"
-                    target="_blank"
-                >
-                    💬 REJOINDRE DISCORD
-                </a>
-
-                <a
-                    class="button secondary"
-                    href="#jeux"
-                >
-                    DÉCOUVRIR NOS JEUX
-                </a>
-
-            </div>
-
-        </div>
-
+    <div class="logo">
+        ☾ <span class="white">MIDNIGHT</span>
+        <span class="green">RACING</span>
     </div>
 
+    <nav>
+        <a href="#accueil">ACCUEIL</a>
+        <a href="#serveur">SERVEUR</a>
+        <a href="#jeux">JEUX</a>
+        <a href="#reglement">RÈGLEMENT</a>
+    </nav>
 
-    <div class="separator"></div>
+</header>
 
 
-    <!-- ==============================
-         SERVEUR
-    ============================== -->
+<!-- ==============================
+     ACCUEIL
+============================== -->
 
-    <section id="serveur">
+<div class="hero" id="accueil">
 
-        <div class="section-title">
+    <div class="hero-content">
 
-            <div class="number">
-                01 / COMMUNITY
-            </div>
-
-            <h2>Notre serveur</h2>
-
-            <p>
-                Une communauté où plusieurs jeux
-                et activités sont réunis au même endroit.
-            </p>
-
+        <div class="status">
+            ● COMMUNAUTÉ ACTIVE
         </div>
 
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="icon">🎮</div>
-
-                <h3>Plusieurs jeux</h3>
-
-                <p>
-                    Retrouve différents jeux et activités
-                    directement sur notre serveur Discord.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🤖</div>
-
-                <h3>Bots & jeux</h3>
-
-                <p>
-                    Profite de plusieurs bots permettant
-                    de jouer directement dans Discord.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">🌙</div>
-
-                <h3>Communauté</h3>
-
-                <p>
-                    Discute avec les membres, participe
-                    aux activités et profite du serveur.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <div class="separator"></div>
-
-
-    <!-- ==============================
-         JEUX
-    ============================== -->
-
-    <section id="jeux">
-
-        <div class="section-title">
-
-            <div class="number">
-                02 / GAMES
-            </div>
-
-            <h2>Nos jeux</h2>
-
-            <p>
-                Découvre les jeux et activités disponibles
-                sur Midnight Racing.
-            </p>
-
-        </div>
-
-
-        <div class="games">
-
-            <!-- WARZONE -->
-
-            <div class="game">
-
-                <div class="game-icon">🔫</div>
-
-                <h3>Warzone</h3>
-
-                <p>
-                    Rejoins les autres membres pour jouer
-                    à Warzone et passer un bon moment ensemble.
-                </p>
-
-                <span class="type">
-                    Jeu vidéo
-                </span>
-
-            </div>
-
-
-            <!-- AKINATOR -->
-
-            <div class="game">
-
-                <div class="game-icon">🔮</div>
-
-                <h3>Akinator</h3>
-
-                <p>
-                    Pense à un personnage et laisse Akinator
-                    essayer de deviner à qui tu penses.
-                </p>
-
-                <span class="type">
-                    Bot Discord
-                </span>
-
-            </div>
-
-
-            <!-- MUDAE -->
-
-            <div class="game">
-
-                <div class="game-icon">🎴</div>
-
-                <h3>Mudae</h3>
-
-                <p>
-                    Collectionne des personnages, utilise
-                    les commandes et participe aux activités.
-                </p>
-
-                <span class="type">
-                    Bot Discord
-                </span>
-
-            </div>
-
-
-            <!-- FUUKA -->
-
-            <div class="game">
-
-                <div class="game-icon">📚</div>
-
-                <h3>Fuuka</h3>
-
-                <p>
-                    Profite des différentes commandes et
-                    activités proposées par le bot Fuuka.
-                </p>
-
-                <span class="type">
-                    Bot Discord
-                </span>
-
-            </div>
-
-
-            <!-- INITIAL D -->
-
-            <div class="game">
-
-                <div class="game-icon">🏎️</div>
-
-                <h3>Initial D Street Racing</h3>
-
-                <p>
-                    Fais des courses, améliore tes véhicules
-                    et affronte les autres joueurs.
-                </p>
-
-                <span class="type">
-                    Bot Discord
-                </span>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <div class="separator"></div>
-
-
-    <!-- ==============================
-         DISCORD
-    ============================== -->
-
-    <section>
-
-        <div class="discord-box">
-
-            <h2>☾ Rejoins Midnight Racing</h2>
-
-            <p>
-                Toutes les discussions, activités et jeux
-                sont disponibles sur notre serveur Discord.
-            </p>
+        <h1>
+            MIDNIGHT <span>RACING</span>
+        </h1>
+
+        <p>
+            Une communauté où tu peux discuter,
+            jouer et partager tes passions.
+            <br>
+            Rejoins-nous et viens t'amuser.
+        </p>
+
+        <div class="buttons">
 
             <a
                 class="button discord"
                 href="https://discord.gg/CrgQcJxwjd"
                 target="_blank"
             >
-                💬 REJOINDRE LE SERVEUR
+                💬 REJOINDRE DISCORD
+            </a>
+
+            <a
+                class="button secondary"
+                href="#jeux"
+            >
+                🎮 DÉCOUVRIR NOS JEUX
             </a>
 
         </div>
 
-    </section>
+    </div>
+
+</div>
 
 
-    <!-- ==============================
-         REGLEMENT
-    ============================== -->
+<div class="separator"></div>
 
-    <section id="reglement">
 
-        <div class="section-title">
+<!-- ==============================
+     SERVEUR
+============================== -->
 
-            <div class="number">
-                03 / RULES
-            </div>
+<section id="serveur">
 
-            <h2>Règlement</h2>
+    <div class="section-title">
+
+        <div class="number">
+            01 / COMMUNITY
+        </div>
+
+        <h2>🎮 Notre serveur</h2>
+
+        <p>
+            Une communauté où plusieurs jeux
+            et activités sont réunis au même endroit.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="icon">🎮</div>
+
+            <h3>Plusieurs jeux</h3>
 
             <p>
-                À lire avant de participer à la communauté.
+                Retrouve différents jeux et activités
+                directement sur notre serveur Discord.
             </p>
 
         </div>
 
 
-        <div class="rules">
+        <div class="card">
+
+            <div class="icon">🤖</div>
+
+            <h3>Bots & jeux</h3>
+
+            <p>
+                Profite de plusieurs bots permettant
+                de jouer directement dans Discord.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🌙</div>
+
+            <h3>Communauté</h3>
+
+            <p>
+                Discute avec les membres, participe
+                aux activités et profite du serveur.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="separator"></div>
+
+
+<!-- ==============================
+     JEUX
+============================== -->
+
+<section id="jeux">
+
+    <div class="section-title">
+
+        <div class="number">
+            02 / GAMES
+        </div>
+
+        <h2>🎮 Nos jeux</h2>
+
+        <p>
+            Découvre les jeux et activités disponibles
+            sur Midnight Racing.
+        </p>
+
+    </div>
+
+
+    <div class="games">
+
+        <!-- WARZONE -->
+
+        <div class="game">
+
+            <div class="game-icon">🔫</div>
+
+            <h3>Warzone</h3>
+
+            <p>
+                Rejoins les autres membres pour jouer
+                à Warzone et passer un bon moment ensemble.
+            </p>
+
+            <span class="type">
+                Jeu vidéo
+            </span>
+
+        </div>
+
+
+        <!-- AKINATOR -->
+
+        <div class="game">
+
+            <div class="game-icon">🔮</div>
+
+            <h3>Akinator</h3>
+
+            <p>
+                Pense à un personnage et laisse Akinator
+                essayer de deviner à qui tu penses.
+            </p>
+
+            <span class="type">
+                Bot Discord
+            </span>
+
+        </div>
+
+
+        <!-- MUDAE -->
+
+        <div class="game">
+
+            <div class="game-icon">🎴</div>
+
+            <h3>Mudae</h3>
+
+            <p>
+                Collectionne des personnages, utilise
+                les commandes et participe aux activités.
+            </p>
+
+            <span class="type">
+                Bot Discord
+            </span>
+
+        </div>
+
+
+        <!-- FUUKA -->
+
+        <div class="game">
+
+            <div class="game-icon">📚</div>
+
+            <h3>Fuuka</h3>
+
+            <p>
+                Profite des différentes commandes et
+                activités proposées par le bot Fuuka.
+            </p>
+
+            <span class="type">
+                Bot Discord
+            </span>
+
+        </div>
+
+
+        <!-- INITIAL D -->
+
+        <div class="game">
+
+            <div class="game-icon">🏎️</div>
+
+            <h3>Initial D Street Racing</h3>
+
+            <p>
+                Fais des courses, améliore tes véhicules
+                et affronte les autres joueurs.
+            </p>
+
+            <span class="type">
+                Bot Discord
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="separator"></div>
+
+
+<!-- ==============================
+     DISCORD
+============================== -->
+
+<section>
+
+    <div class="discord-box">
+
+        <h2>☾ Rejoins Midnight Racing</h2>
+
+        <p>
+            Toutes les discussions, activités et jeux
+            sont disponibles sur notre serveur Discord.
+        </p>
+
+        <a
+            class="button discord"
+            href="https://discord.gg/CrgQcJxwjd"
+            target="_blank"
+        >
+            💬 REJOINDRE LE SERVEUR
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     REGLEMENT
+============================== -->
+
+<section id="reglement">
+
+    <div class="section-title">
+
+        <div class="number">
+            03 / RULES
+        </div>
+
+        <h2>📜 Règlement</h2>
+
+        <p>
+            À lire avant de participer à la communauté.
+        </p>
+
+    </div>
+
+
+    <div class="rules">
+```
 
 <pre>╭━━━━━━━━━━━━━━━━━━━━╮
 ☾ 𝐌𝐈𝐃𝐍𝐈𝐆𝐇𝐓 𝐑𝐀𝐂𝐈𝐍𝐆 ☾
@@ -1012,24 +1095,25 @@
 ☾ 𝐁𝐎𝐍𝐍𝐄 𝐂𝐎𝐍𝐃𝐔𝐈𝐓𝐄 𝐄𝐓 𝐁𝐎𝐍 𝐑𝐈𝐃𝐄 ! ☾
 ╰━━━━━━━━━━━━━━━━━━━━╯</pre>
 
-        </div>
+```
+    </div>
 
-    </section>
+</section>
 
 
-    <!-- ==============================
-         FOOTER
-    ============================== -->
+<!-- ==============================
+     FOOTER
+============================== -->
 
-    <footer>
+<footer>
 
-        <p>
-            © 2026 <strong>Midnight Racing</strong>
-            — Tous droits réservés.
-        </p>
+    <p>
+        © 2026 <strong>Midnight Racing</strong>
+        — Tous droits réservés.
+    </p>
 
-    </footer>
-
+</footer>
+```
 
 </body>
 </html>
